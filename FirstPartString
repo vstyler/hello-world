@@ -1,0 +1,66 @@
+public class Main {
+
+	public static void main(String[] args) {
+		
+		Main menue = new Main();
+		menue.make();
+		
+	}
+	
+	public static double convertDezi(double number) {
+		while(number >= 1) {
+			number /= 10;
+		}
+		return number;
+	}
+	
+	public void make() {
+		String uebergabe = "-12153,756444";
+		
+		boolean positive = true;
+		boolean numberFound = false;
+		boolean komma = false;
+		
+		long preNumber = 0l;
+		long afterNumber = 0l;
+		
+		
+		
+		if(uebergabe.length() == 0) {
+			System.out.println("Kein String");
+		}else {
+			
+			for(int i = 0; i < uebergabe.length(); i++) {
+				if(uebergabe.charAt(i)== ' ' || uebergabe.charAt(i) == '.') {
+					;
+				}else if (uebergabe.charAt(i) == '-' && numberFound == false) {
+					positive = false;
+				}else if (uebergabe.charAt(i) == '+' && numberFound == false) {
+					;
+				}else if(uebergabe.charAt(i) == ',' && komma == false) {
+					komma = true;
+				}
+				else if((uebergabe.charAt(i) >= '0' && uebergabe.charAt(i) <= '9')) {
+					if(!komma && preNumber < 1000000000l) {
+						preNumber = preNumber*10 + uebergabe.charAt(i)-48;
+					}else if(komma && afterNumber < 1000000000l) {
+						afterNumber = afterNumber*10 + uebergabe.charAt(i)-48;
+					}
+					numberFound = true;
+				}else if(numberFound == false){
+					System.out.println("Keine Zahl");
+					break;
+				}else{
+					break;
+				}
+			}
+			if(numberFound ==true) {
+			System.out.printf("%c%d"+","+"%d", positive == true? '+' : '-', preNumber, afterNumber);
+			double afterTwice = convertDezi(afterNumber)*2;
+			afterTwice = preNumber*2 + afterTwice; 
+			
+			System.out.printf("%n%c%f", positive == true? '+' : '-', afterTwice);
+			}
+		}	
+	}
+}
